@@ -8,6 +8,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {AppComponent} from './app.component';
 import {SampleMaterialModule} from './sample-material.module';
 import {MomentModule} from 'ngx-moment';
+import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import {MomentModule} from 'ngx-moment';
     MomentModule
   ],
   entryComponents: [AppComponent],
-  declarations: [AppComponent],
+  declarations: [AppComponent, QuestionnaireComponent],
   bootstrap: [AppComponent],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },

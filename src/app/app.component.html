@@ -1,19 +1,15 @@
-<div>
-    <h2>Current Time: {{currentDateTime | date: 'medium'}}</h2>
-    <h2 *ngIf="timeDiff">Response Time: {{timeDiff}} Seconds</h2>
-</div>
-
-<div>
-    <form [formGroup]="searchForm" (ngSubmit)="search(searchForm);">
+<form class="formClass" [formGroup]="search" (ngSubmit)="searchFilter(search);">
+    <div>
         <mat-form-field class="example-full-width">
-            <input type="email" matInput formControlName="name"
-                   placeholder="Search for Names">
+            <input type="name" matInput formControlName="name">
         </mat-form-field>
-        <mat-form-field appearance="fill" class="example-form-field">
-            <mat-label>Enter a date range</mat-label>
+    </div>
+    <div>
+        <mat-form-field >
+            <mat-label>Filter By Date</mat-label>
             <mat-date-range-input [rangePicker]="rangePicker">
-                <input matStartDate formControlName="dateIntMin" placeholder="Start date">
-                <input matEndDate formControlName="dateIntMax" placeholder="End date">
+                <input matStartDate formControlName="minDate" placeholder="min date">
+                <input matEndDate formControlName="maxDate" placeholder="max date">
             </mat-date-range-input>
             <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
             <mat-date-range-picker #rangePicker>
@@ -23,27 +19,20 @@
                 </mat-date-range-picker-actions>
             </mat-date-range-picker>
         </mat-form-field>
-        <button mat-raised-button [disabled]="!searchForm.dirty || submitted" type="submit">Search</button>
-    </form>
-
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> ID. </th>
-          <td mat-cell *matCellDef="let element"> {{element.resource.id}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="name" >
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.resource?.name ? element.resource?.name[0]?.given[0] : ''}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="birthdate" >
-          <th mat-header-cell *matHeaderCellDef> Birth Date </th>
-          <td mat-cell *matCellDef="let element"> {{element.resource?.birthDate | date: 'short'}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-</div>
+    </div>
+    <div>
+        <button mat-button color="primary" [disabled]="!search.dirty || submitted" type="submit">Search</button>
+    </div>
+</form>
+<table class="table" id="customers">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Birth Date</th>
+      </tr>
+      <tr *ngFor="let val of data">
+        <th scope="row">{{val.resource.id}}</th>
+        <td>{{val.resource?.name ? val.resource?.name[0]?.given[0] + ' ' +val.resource?.name[0]?.family: ''}}</td>
+        <td>{{val.resource?.birthDate | date: 'short'}}</td>
+      </tr>
+  </table>
